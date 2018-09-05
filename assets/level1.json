@@ -1,0 +1,79 @@
+{
+ "animationLibrary" : 
+ {
+ },
+ "meshLibrary" : 
+ {
+  "parkhouse" : "meshes/parkhouse.fbx"
+ },
+ "scene" : 
+ {
+  "children" : 
+  [
+   {
+    "name": "map",
+    "children" : [],
+    "mesh" : 
+    {
+     "name" : "parkhouse"
+    },
+    "transform" : 
+    {
+     "origin" : 
+     [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "position" : 
+     [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotationEuler" : 
+     [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "scale" : 
+     [
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    "type" : "MeshNode"
+   }
+  ],
+  "transform" : 
+  {
+   "origin" : 
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "position" : 
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "rotationEuler" : 
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "scale" : 
+   [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "type" : "SceneNode"
+ }
+}
