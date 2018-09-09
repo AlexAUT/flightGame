@@ -21,22 +21,3 @@ int main()
 
   return returnValue;
 }
-
-
-/*#include <SFML/Graphics.hpp>
-
-int main()
-{
-    sf::RenderWindow window({800, 600}, "TEst");
-    while(window.isOpen())
-    {
-        sf::Event e;
-        while(window.pollEvent(e))
-        {
-
-        }
-        window.clear(sf::Color::Red);
-        window.display();
-    }
-
-}*/

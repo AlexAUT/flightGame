@@ -17,6 +17,8 @@ bool Level::load(const std::string& path, aw::Scene& scene, ResourceManager& res
 {
   bool result = aw::SceneLoader::loadFromAssetFile(path, scene, resManager.textures, resManager.meshes,
                                                    resManager.meshAnimations);
+  if (!result)
+    return false;
 
   auto mapNode = dynamic_cast<aw::MeshNode*>(scene.findNodeByName("map"));
   LogLevelE() << mapNode->meshInstance().getMesh().getBounds();

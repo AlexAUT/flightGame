@@ -27,6 +27,9 @@ bool Airplane::loadFromAssetFile(const std::string& assetPath, aw::Scene& scene,
 
   bool result = aw::SceneLoader::loadFromAssetFile(assetPath, *container, resManager.textures, resManager.meshes,
                                                    resManager.meshAnimations);
+  if (!result)
+    return false;
+
   scene.addChild(container);
 
   mPlaneNode = dynamic_cast<aw::MeshNode*>(container->findNodeByName("airplane"));
@@ -62,7 +65,6 @@ void Airplane::update(float delta)
 
   setPosition(getPosition() + glm::normalize(mFlightDirection) * mVelocity * delta);
 
-  auto xRot = glm::dot(mFlightDirection, aw::Vec3{1.f, 0.f, 0.f});
   glm::mat4 lookMat =
       glm::lookAt(glm::vec3(0.f, 0.f, 0.f), mFlightDirection * glm::vec3(1.f, 1.f, -1.f), glm::vec3(0, 1, 0));
   auto rotation = glm::toQuat(lookMat);

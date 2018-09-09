@@ -83,7 +83,7 @@ void GameState::render()
   float farDistance = 10.f;
   auto nearMid = c + v * mCamera.getNearPlane();
   auto farMid = c + v * farDistance;
-  auto midPos = c + v * (mCamera.getNearPlane() + (0.5f * (farDistance - mCamera.getNearPlane())));
+  // auto midPos = c + v * (mCamera.getNearPlane() + (0.5f * (farDistance - mCamera.getNearPlane())));
 
   auto nearHalfWidth = glm::tan(fov) * mCamera.getNearPlane();
   auto farHalfWidth = glm::tan(fov) * farDistance;
@@ -97,8 +97,8 @@ void GameState::render()
   LogTemp() << "Near and far: " << nearHalfWidth << " " << farHalfWidth;
   LogTemp() << boundingBox;
 
-  auto aPos = mAirplane.getPosition();
-  //aw::Camera lightCam(aw::Camera::createOrthograpic(boundingBox.min.x, boundingBox.max.x, boundingBox.min.z,
+  // auto aPos = mAirplane.getPosition();
+  // aw::Camera lightCam(aw::Camera::createOrthograpic(boundingBox.min.x, boundingBox.max.x, boundingBox.min.z,
   //                                                  boundingBox.max.z, 0.1, 12.f
   aw::Camera lightCam(aw::Camera::createOrthograpic(-10.f, 10.f, -10.f, 10.f, 0.1f, 12.f));
   lightCam.setRotationEuler({-PI_2, 0.f, 0.f});
@@ -116,7 +116,7 @@ void GameState::render()
                                             light);
 
   glDisable(GL_DEPTH_TEST);
-  //aw::PostProcessRenderer::render(mShadowFramebuffer.getColorTexture());
+  // aw::PostProcessRenderer::render(mShadowFramebuffer.getColorTexture());
 }
 
 void GameState::processEvent(const aw::WindowEvent& event)
