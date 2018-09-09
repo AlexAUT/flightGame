@@ -1,0 +1,89 @@
+apply plugin: 'com.android.application'
+
+def ndkDir = android.ndkDirectory;
+def thirdParty = "${ndkDir}/sources/third_party/"
+def SFML_root = "${thirdParty}/sfml/"
+def SFML_inc = "${SFML_root}/include/"
+def SFML_lib = "${SFML_root}/lib/"
+def SFML_ext = "${SFML_root}/extlibs/lib/"
+def AW_REVOLT_INC = "${thirdParty}/awRevolt/include/"
+def AW_REVOLT_LIB = "${thirdParty}/awRevolt/lib/"
+def EXT_INC = "${thirdParty}/include/"
+def EXT_LIB = "${thirdParty}/lib/"
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.flightgame.alexaut.flightgame"
+        minSdkVersion 17
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++14 -frtti -fexceptions"
+                arguments "-DANDROID_TOOLCHAIN=clang",
+                        "-DANDROID_STL=c++_shared",
+                        "-DSFML_INCLUDE_DIR=${SFML_inc}",
+                        "-DSFML_LIBRARY_DIR=${SFML_lib}",
+                        "-DSFML_EXT_LIBRARY_DIR=${SFML_ext}",
+                        "-DAW_REVOLT_INCLUDE_DIR=${AW_REVOLT_INC}",
+                        "-DAW_REVOLT_LIBRARY_DIR=${AW_REVOLT_LIB}",
+                        "-DAW_REVOLT_EXT_INCLUDE_DIR=${EXT_INC}",
+                        "-DAW_REVOLT_EXT_LIBRARY_DIR=${EXT_LIB}"
+
+                abiFilters 'armeabi-v7a'
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
+
+    sourceSets {
+        main {
+            // let gradle pack the shared library into apk
+            jniLibs.srcDirs = [SFML_lib, SFML_ext, AW_REVOLT_LIB, EXT_LIB]
+            assets.srcDir('../../assets')
+        }
+    }
+    splits {
+
+        // Configures multiple APKs based on ABI.
+        abi {
+
+            // Enables building multiple APKs per ABI.
+            enable true
+
+            // By default all ABIs are included, so use reset() and include to specify that we only
+            // want APKs for x86 and x86_64.
+
+            // Resets the list of ABIs that Gradle should create APKs for to none.
+            reset()
+
+            // Specifies a list of ABIs that Gradle should create APKs for.
+            include "armeabi-v7a"
+
+            // Specifies that we do not want to also generate a universal APK that includes all ABIs.
+            universalApk false
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:28.0.0-rc02'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
