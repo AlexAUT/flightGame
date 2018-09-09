@@ -10,6 +10,8 @@ namespace aw
 class Camera;
 } // namespace aw
 
+class Airplane;
+
 class CameraController
 {
 public:
@@ -17,7 +19,7 @@ public:
 
   void setCamera(aw::Camera* camera);
 
-  void update(float delta);
+  void update(float delta, const Airplane& airplane);
   void processEvent(const aw::WindowEvent& event);
 
 private:

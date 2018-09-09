@@ -19,6 +19,7 @@ bool Level::load(const std::string& path, aw::Scene& scene, ResourceManager& res
                                                    resManager.meshAnimations);
 
   auto mapNode = dynamic_cast<aw::MeshNode*>(scene.findNodeByName("map"));
+  LogLevelE() << mapNode->meshInstance().getMesh().getBounds();
   if (!mapNode)
   {
     LogLevelE() << "The level file did not contain a map mesh node: " << path;

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../game/airplane.hpp"
 #include "../game/cameraController.hpp"
 #include "../game/level.hpp"
 #include "../game/resourceManager.hpp"
@@ -7,6 +8,7 @@
 #include <aw/engine/runtime/state.hpp>
 #include <aw/engine/window.hpp>
 #include <aw/graphics/core/camera.hpp>
+#include <aw/graphics/core/frameBuffer.hpp>
 #include <aw/graphics/core/shaderProgram.hpp>
 #include <aw/runtime/renderers/meshRenderer.hpp>
 #include <aw/runtime/scene/scene.hpp>
@@ -34,10 +36,14 @@ private:
   aw::Camera mCamera;
   CameraController mCamController;
 
+  aw::ShaderProgram mMeshShadowMapShader;
   aw::ShaderProgram mMeshForwardShader;
   ResourceManager mResourceManager;
   aw::Scene mScene;
   aw::MeshRenderer mMeshRenderer;
 
   Level mLevel;
+  Airplane mAirplane;
+
+  aw::FrameBuffer mShadowFramebuffer;
 };

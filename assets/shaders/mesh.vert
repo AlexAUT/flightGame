@@ -15,6 +15,7 @@ const int MAX_BONES = 58;
 uniform mat4 bones[MAX_BONES];
 
 varying vec4 pos_shadowmap;
+varying vec3 position;
 varying vec2 uv;
 varying vec3 normal;
 
@@ -57,6 +58,7 @@ void main()
   gl_Position = vp_matrix * modelMatrix * vec4(vPosition, 1.0);
   
   pos_shadowmap = shadow_mvp_biased * modelMatrix * vec4(vPosition, 1.0);
+  position = vec3(modelMatrix * vec4(vPosition, 1.0));
   mat3 normalTransform = cinverse(ctranspose(mat3(modelMatrix)));
   normal = normalTransform * vNormal;
 }

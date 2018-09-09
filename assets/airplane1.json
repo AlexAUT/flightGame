@@ -1,0 +1,80 @@
+{
+ "animationLibrary" : 
+ {
+ },
+ "meshLibrary" : 
+ {
+  "airplane" : "meshes/airplane1.fbx",
+  "airplane3": "meshes/airplane3.fbx"
+ },
+ "scene" : 
+ {
+  "children" : 
+  [
+   {
+    "name": "airplane",
+    "children" : [],
+    "mesh" : 
+    {
+     "name" : "airplane3"
+    },
+    "transform" : 
+    {
+     "origin" : 
+     [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "position" : 
+     [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotationEuler" : 
+     [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "scale" : 
+     [
+      0.1,
+      0.1,
+      0.1
+     ]
+    },
+    "type" : "MeshNode"
+   }
+  ],
+  "transform" : 
+  {
+   "origin" : 
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "position" : 
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "rotationEuler" : 
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "scale" : 
+   [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "type" : "SceneNode"
+ }
+}
