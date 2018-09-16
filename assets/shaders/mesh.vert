@@ -8,13 +8,15 @@ uniform mat4 mvp_matrix;
 uniform mat4 vp_matrix;
 uniform mat4 vm_matrix;
 uniform mat4 m_matrix;
-uniform mat4 shadow_mvp_biased;
+const int CASCADE_COUNT = 4;
+uniform mat4 shadow_mvp_biased[CASCADE_COUNT];
 uniform bool has_bones;
 
 const int MAX_BONES = 58;
 uniform mat4 bones[MAX_BONES];
 
-varying vec4 pos_shadowmap;
+varying vec4 pos_shadowmap[CASCADE_COUNT];
+varying vec4 uv_shadowmap[CASCADE_COUNT];
 varying vec3 position;
 varying vec2 uv;
 varying vec3 normal;
@@ -57,7 +59,10 @@ void main()
   uv = vTexCoord;
   gl_Position = vp_matrix * modelMatrix * vec4(vPosition, 1.0);
   
-  pos_shadowmap = shadow_mvp_biased * modelMatrix * vec4(vPosition, 1.0);
+  for(int i = 0; i < CASCADE_COUNT; i++)
+  {
+    pos_shadowmap[i] = shadow_mvp_biased[i] * modelMatrix * vec4(vPosition, 1.0);
+  }
   position = vec3(modelMatrix * vec4(vPosition, 1.0));
   mat3 normalTransform = cinverse(ctranspose(mat3(modelMatrix)));
   normal = normalTransform * vNormal;

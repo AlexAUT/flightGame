@@ -7,7 +7,7 @@
 #include <aw/runtime/scene/sceneLoader.hpp>
 #include <aw/utils/log.hpp>
 
-DEFINE_LOG_CATEGORY(LevelE, aw::log::Error, "Level")
+DEFINE_LOG_CATEGORY(LevelE, aw::log::Error, Level)
 
 Level::Level()
 {
@@ -21,7 +21,6 @@ bool Level::load(const std::string& path, aw::Scene& scene, ResourceManager& res
     return false;
 
   auto mapNode = dynamic_cast<aw::MeshNode*>(scene.findNodeByName("map"));
-  LogLevelE() << mapNode->meshInstance().getMesh().getBounds();
   if (!mapNode)
   {
     LogLevelE() << "The level file did not contain a map mesh node: " << path;

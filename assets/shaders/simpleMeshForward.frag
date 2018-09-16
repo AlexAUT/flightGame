@@ -1,7 +1,8 @@
+const int CASCADE_COUNT = 4;
 varying vec2 uv;
 varying vec3 normal;
 varying vec3 position;
-varying vec4 pos_shadowmap;
+varying vec4 pos_shadowmap[CASCADE_COUNT];
 
 struct DirectionalLight
 {
@@ -60,19 +61,41 @@ vec4 calculateDirLight(DirectionalLight light, vec4 diffColor, float visibility)
 void main()
 {
   vec4 color = vec4(0.0, 0.0, 0.0, 1.0);
+  vec4 mapColor = vec4(0.f, 0.f, 0.f, 1.0);
 
   for(int i = 0; i < MAX_DIR_LIGHT_COUNT; i++)
   {
     float visibility = 1.0;
     float bias = max(0.005 * (1.0 - dot(normal, dirLights[i].dir)), 0.0005);  
-    if(texture2D(shadowMap_1, pos_shadowmap.xy).r < pos_shadowmap.z - bias)
-      visibility = 0.5;
+    for(int i = 0; i < CASCADE_COUNT; i++)
+    {
+      if(pos_shadowmap[i].x >= 0.0 && pos_shadowmap[i].x <= 1.0 && pos_shadowmap[i].y >= 0.0 && pos_shadowmap[i].y <= 1.0)
+      {
+        vec2 scaledTex = pos_shadowmap[i].xy * 0.5;
+        scaledTex.x += (i % 2) * 0.5;
+        scaledTex.y += (i / 2) * 0.5;
+        if(texture2D(shadowMap_1, scaledTex).r < pos_shadowmap[i].z - bias)
+        {
+          visibility = 0.5;
+          if(i == 1)
+            mapColor = vec4(1.0, 0.0, 0.0, 1.0);
+          if(i == 2)
+            mapColor = vec4(0.0, 1.0, 0.0, 1.0);
+          if(i == 3)
+            mapColor = vec4(0.0, 0.0, 1.0, 1.0);
+          if(i == 4)
+            mapColor = vec4(1.0, 0.0, 1.0, 1.0);
+          break;
+        }
+      }
+    }
     
     color += calculateDirLight(dirLights[i], getDiffuseColor(), visibility); 
   }
     
   color.a = 1.0;
   gl_FragColor = color;
+  //gl_FragColor = mapColor * getDiffuseColor();
   //gl_FragColor = getDiffuseColor(); 
   //gl_FragColor = vec4(normal, 1.0);
 }

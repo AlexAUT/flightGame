@@ -33,7 +33,11 @@ public:
   aw::Vec3 getFlightDirection() const;
 
 private:
+  float test;
+
 private:
+  float mtest2;
+  aw::MeshNode* test2;
   aw::MeshNode* mPlaneNode{nullptr};
 
   float mVelocity{0.f};
