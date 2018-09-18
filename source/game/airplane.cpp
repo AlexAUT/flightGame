@@ -7,6 +7,8 @@
 #include <aw/runtime/scene/sceneLoader.hpp>
 #include <aw/utils/assetInputStream.hpp>
 #include <aw/utils/log.hpp>
+#include <aw/utils/math/constants.hpp>
+using namespace aw::constantsF;
 
 #include <SFML/Window/Keyboard.hpp>
 
@@ -55,20 +57,24 @@ void Airplane::update(float delta)
 {
   float sensitivity = 1.f;
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-    mFlightDirection = glm::rotateX(mFlightDirection, sensitivity * delta);
+    mFlightOrientation *= aw::Quaternion(1.f, delta * 1.f, 0.f, 0.f);
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-    mFlightDirection = glm::rotateX(mFlightDirection, -sensitivity * delta);
+    mFlightOrientation *= aw::Quaternion(1.f, -delta * 1.f, 0.f, 0.f);
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-    mFlightDirection = glm::rotateY(mFlightDirection, -sensitivity * delta);
+    mFlightOrientation *= aw::Quaternion(1.f, 0.f, delta * 1.f, 0.f);
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-    mFlightDirection = glm::rotateY(mFlightDirection, sensitivity * delta);
-
-  setPosition(getPosition() + glm::normalize(mFlightDirection) * mVelocity * delta);
-
-  glm::mat4 lookMat =
-      glm::lookAt(glm::vec3(0.f, 0.f, 0.f), mFlightDirection * glm::vec3(1.f, 1.f, -1.f), glm::vec3(0, 1, 0));
-  auto rotation = glm::toQuat(lookMat);
-  mPlaneNode->localTransform().setRotation(rotation);
+    mFlightOrientation *= aw::Quaternion(1.f, 0.f, -delta * 1.f, 0.f);
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+    mFlightOrientation *= aw::Quaternion(1.f, 0.f, 0.f, delta * 1.f);
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+    mFlightOrientation *= aw::Quaternion(1.f, 0.f, 0.f, -delta * 1.f);
+  // setPosition(getPosition() + glm::normalize(mFlightDirection) * mVelocity * delta);
+  // mFlightOrientation = aw::Quaternion(aw::Vec3(0.f, 0.f, 0.f));
+  auto flightDir = glm::rotate(mFlightOrientation, aw::Vec3(0.f, 0.f, 1.f));
+  setPosition(getPosition() + glm::normalize(flightDir) * mVelocity * delta);
+  // Airplane points torwards viewer, so rotate it by 180° in Y axis
+  auto localRot = aw::Quaternion(aw::Vec3(0.f, PI, 0.f));
+  mPlaneNode->localTransform().setRotation(mFlightOrientation);
 }
 
 void Airplane::setPosition(aw::Vec3 pos)
@@ -81,20 +87,11 @@ void Airplane::setVelocity(float velocity)
   mVelocity = velocity;
 }
 
-void Airplane::setFlightDirection(aw::Vec3 flightDirection)
-{
-  mFlightDirection = flightDirection;
-}
-
 aw::Vec3 Airplane::getPosition() const
 {
   return mPlaneNode->localTransform().getPosition();
 }
 
-aw::Vec3 Airplane::getFlightDirection() const
-{
-  return mFlightDirection;
-}
 float Airplane::getVelocity() const
 {
   return mVelocity;

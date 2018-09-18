@@ -9,7 +9,7 @@ CameraController::CameraController(aw::Camera* camera) : mOrbitalController(came
 {
   mOrbitalController.setViewAtPoint({0.f, 0.5f, 10.f});
   mOrbitalController.setDistanceToViewPoint(2.f);
-  mOrbitalController.setRotationHorizontal(0.3f);
+  mOrbitalController.setRotationHorizontal(0.f);
   mOrbitalController.setRotationVertical(PI);
 }
 

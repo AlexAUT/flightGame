@@ -4,6 +4,7 @@
 
 #include <aw/runtime/scene/scene.hpp>
 
+#include <aw/utils/math/quaternion.hpp>
 #include <aw/utils/math/vector.hpp>
 
 class ResourceManager;
@@ -26,11 +27,9 @@ public:
 
   void setPosition(aw::Vec3 pos);
   void setVelocity(float velocity);
-  void setFlightDirection(aw::Vec3 flightDirection);
 
   aw::Vec3 getPosition() const;
   float getVelocity() const;
-  aw::Vec3 getFlightDirection() const;
 
 private:
   float test;
@@ -41,5 +40,5 @@ private:
   aw::MeshNode* mPlaneNode{nullptr};
 
   float mVelocity{0.f};
-  aw::Vec3 mFlightDirection{0.f};
+  aw::Quaternion mFlightOrientation{1.f, 0.f, 0.f, 0.f};
 };

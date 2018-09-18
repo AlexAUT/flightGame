@@ -35,7 +35,6 @@ GameState::GameState(aw::Engine& engine)
   mAirplane.loadFromAssetFile("airplane1.json", mScene, mResourceManager, mMeshRenderer);
   mAirplane.setPosition({-0.5f, 2.f, 0.f});
   mAirplane.setVelocity(2.f);
-  mAirplane.setFlightDirection({0.0f, 0.f, 1.f});
 
   auto vMesh = aw::ShaderStage::loadFromAssetFile(aw::ShaderStage::Vertex, "shaders/mesh.vert");
 
@@ -77,7 +76,7 @@ void GameState::render()
   light.energy = 0.9;
 
   auto shadowView = glm::lookAt({0.f, 0.f, 0.}, light.direction, {0.f, 1.f, 0.f});
-  LogTemp() << shadowView;
+  // LogTemp() << shadowView;
 
   auto mapNode = (aw::MeshNode*)mScene.findNodeByName("map");
   auto shadowBox = aw::AABB::createFromTransform(mapNode->meshInstance().getMesh().getBounds(), shadowView);
@@ -122,7 +121,7 @@ void GameState::render()
     mapBounds.max.x += (s - std::fmod(mapBounds.max.x, s));
     mapBounds.max.y += (s - std::fmod(mapBounds.max.y, s));
 
-    LogTemp() << "Center: " << mapBounds.getCenter();
+    //    LogTemp() << "Center: " << mapBounds.getCenter();
 
     mShadowCamera[i] = aw::Camera::createOrthograpic(mapBounds.min.x, mapBounds.max.x, mapBounds.min.y, mapBounds.max.y,
                                                      shadowBox.min.z, shadowBox.max.z);
