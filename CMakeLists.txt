@@ -38,15 +38,25 @@ if(AW_DESKTOP)
     #find_package(SFML 2 REQUIRED  window system)
     target_link_libraries(${PROJECT_NAME} sfml-window sfml-system)
 
-    # Setup assimp, we need to create a target ourself
-    FILE(GLOB ASSIMP_DIR "${CMAKE_SOURCE_DIR}/extlibs/lib/cmake/assimp*")
-    target_link_libraries(${PROJECT_NAME} ${ASSIMP_LIBRARY})
-    #jsoncpp
-    set(jsoncpp_DIR "${CMAKE_SOURCE_DIR}/extlibs/lib64/cmake/jsoncpp")
-    find_package(jsoncpp REQUIRED)
-    target_link_libraries(${PROJECT_NAME} jsoncpp)
+    if (WIN32)   
+      # Setup assimp, we need to create a target ourself
+      #jsoncpp
+      set(jsoncpp_DIR "${CMAKE_SOURCE_DIR}/extlibs/lib64/cmake/jsoncpp")
+      find_package(jsoncpp REQUIRED)
+      target_link_libraries(${PROJECT_NAME} jsoncpp assimp)
 
-    target_link_libraries(${PROJECT_NAME} awRevolt GL)
+      target_link_libraries(${PROJECT_NAME} awRevolt opengl32)
+    else()
+      # Setup assimp, we need to create a target ourself
+      FILE(GLOB ASSIMP_DIR "${CMAKE_SOURCE_DIR}/extlibs/lib/cmake/assimp*")
+      target_link_libraries(${PROJECT_NAME} ${ASSIMP_LIBRARY})
+      #jsoncpp
+      set(jsoncpp_DIR "${CMAKE_SOURCE_DIR}/extlibs/lib64/cmake/jsoncpp")
+      find_package(jsoncpp REQUIRED)
+      target_link_libraries(${PROJECT_NAME} jsoncpp)
+
+      target_link_libraries(${PROJECT_NAME} awRevolt GL)
+    endif()
 
 elseif(AW_ANDROID)
     message(STATUS "SFML include dir: ${SFML_INCLUDE_DIR}")
