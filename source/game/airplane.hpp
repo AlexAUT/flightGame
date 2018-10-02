@@ -30,6 +30,20 @@ public:
 
   aw::Vec3 getPosition() const;
   float getVelocity() const;
+  const aw::Quaternion& getFlightOrientation() const
+  {
+    return mFlightOrientation;
+  }
+  float getSidewaysForce() const
+  {
+    return mSideWaysForce;
+  }
+  float getUpwaysForce() const
+  {
+    return mUpWaysForce;
+  }
+
+  aw::MeshNode* getPlaneNode() const;
 
 private:
   float test;
@@ -41,4 +55,7 @@ private:
 
   float mVelocity{0.f};
   aw::Quaternion mFlightOrientation{1.f, 0.f, 0.f, 0.f};
+
+  float mUpWaysForce{0.f};
+  float mSideWaysForce{0.f};
 };

@@ -34,7 +34,7 @@ GameState::GameState(aw::Engine& engine)
   mLevel.load("level1.json", mScene, mResourceManager, mMeshRenderer);
   mAirplane.loadFromAssetFile("airplane1.json", mScene, mResourceManager, mMeshRenderer);
   mAirplane.setPosition({-0.5f, 2.f, 0.f});
-  mAirplane.setVelocity(2.f);
+  mAirplane.setVelocity(4.f);
 
   auto vMesh = aw::ShaderStage::loadFromAssetFile(aw::ShaderStage::Vertex, "shaders/mesh.vert");
 

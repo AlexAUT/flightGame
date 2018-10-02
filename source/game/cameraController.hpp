@@ -24,6 +24,7 @@ public:
 
 private:
 private:
+  aw::Camera* mCamera{nullptr};
   aw::OrbitCameraController mOrbitalController;
 
   bool mMouseInit;
