@@ -28,8 +28,8 @@ GameState::GameState(aw::Engine& engine)
   auto color = aw::Colors::CADETBLUE;
   GL_CHECK(glClearColor(color.r, color.g, color.b, 1.0));
 
-  mEventListenerId =
-      mEngine.getWindow().registerEventListener(std::bind(&GameState::processEvent, this, std::placeholders::_1));
+  auto eventCallback = [this](auto event) { processEvent(event); };
+  mEventListenerId = mEngine.getWindow().registerEventListener(eventCallback);
 
   mLevel.load("level1.json", mScene, mResourceManager, mMeshRenderer);
   mAirplane.loadFromAssetFile("airplane1.json", mScene, mResourceManager, mMeshRenderer);
