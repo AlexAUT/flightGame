@@ -1,0 +1,3 @@
+[submodule "dependencies/awRevolt"]
+	path = dependencies/awRevolt
+	url = https://github.com/alexaut/awRevolt

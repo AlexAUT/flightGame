@@ -1,5 +1,6 @@
 add_subdirectory(states)
 add_subdirectory(game)
+add_subdirectory(opengl)
 
 set(HEADER_FILES
   ${HEADER_FILES}

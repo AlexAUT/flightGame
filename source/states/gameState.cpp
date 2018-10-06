@@ -16,6 +16,8 @@
 
 #include <aw/graphics/3d/directionalLight.hpp>
 
+#include "../opengl/gl.hpp"
+
 using namespace aw::constantsF;
 
 DEFINE_LOG_CATEGORY(GameD, aw::log::Debug, "GameState")
@@ -23,9 +25,8 @@ DEFINE_LOG_CATEGORY(GameD, aw::log::Debug, "GameState")
 GameState::GameState(aw::Engine& engine)
     : aw::State(engine.getStateMachine()), mEngine(engine),
       mCamera(aw::Camera::createPerspective(800.f / 600.f, 60.f * TO_RAD, 0.1f, 200.f)), mCamController(&mCamera)
-
 {
-  auto color = aw::Colors::CADETBLUE;
+  auto color = aw::Colors::ALICEBLUE;
   GL_CHECK(glClearColor(color.r, color.g, color.b, 1.0));
 
   auto eventCallback = [this](auto event) { processEvent(event); };
@@ -73,14 +74,14 @@ void GameState::render()
   aw::DirectionalLight light;
   light.color = aw::Vec3(1.f, 1.f, 1.f);
   light.direction = glm::normalize(aw::Vec3(0.0f, 0.99f, 0.01f));
-  light.energy = 0.9;
+  light.energy = 0.9f;
 
   auto shadowView = glm::lookAt({0.f, 0.f, 0.}, light.direction, {0.f, 1.f, 0.f});
   // LogTemp() << shadowView;
 
   auto mapNode = (aw::MeshNode*)mScene.findNodeByName("map");
   auto shadowBox = aw::AABB::createFromTransform(mapNode->meshInstance().getMesh().getBounds(), shadowView);
-  const float s = 0.001;
+  const float s = 0.001f;
   shadowBox.min.x -= std::fmod(shadowBox.min.x, s);
   shadowBox.min.y -= std::fmod(shadowBox.min.y, s);
   shadowBox.max.x += (s - std::fmod(shadowBox.max.x, s));
@@ -94,7 +95,7 @@ void GameState::render()
   lightCam.setRotationEuler({-PI_2, 0.f, 0.f});
   lightCam.setPosition(aw::Vec3(0.f, 0.f, 0.f));
 
-  std::array<float, 5> splitDistances = {-0.1, -5, -15, -40, -100.f};
+  std::array<float, 5> splitDistances = {-0.1f, -5.f, -15.f, -40.f, -100.f};
   for (auto& d : splitDistances)
   {
     auto c = mCamera.getProjectionMatrix() * aw::Vec4(0.f, 0.f, d, 1.f);
@@ -131,9 +132,9 @@ void GameState::render()
 
   mShadowFramebuffer.bind();
   GL_CHECK(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
-  for (int i = 0; i < 4; i++)
+  for (std::size_t i = 0; i < 4; i++)
   {
-    glViewport(1024 * (i % 2), 1024 * (i / 2), 1024, 1024);
+    glViewport(static_cast<int>(1024 * (i % 2)), static_cast<int>(1024 * (i / 2)), 1024, 1024);
     mMeshRenderer.renderShadowMap(mShadowCamera[i], mMeshShadowMapShader, light);
   }
   glViewport(0, 0, mEngine.getWindow().getSize().x, mEngine.getWindow().getSize().y);
@@ -151,8 +152,9 @@ void GameState::render()
   mMeshRenderer.renderForwardPassWithShadow(mCamera, lightCam, mShadowFramebuffer.getDepthTexture(), mMeshForwardShader,
                                             light);
 
+  LogTemp() << mCamera.getPosition();
   glDisable(GL_DEPTH_TEST);
-  // aw::PostProcessRenderer::render(mShadowFramebuffer.getColorTexture());
+  //  aw::PostProcessRenderer::render(mShadowFramebuffer.getColorTexture());
 }
 
 void GameState::processEvent(const aw::WindowEvent& event)
