@@ -12,6 +12,8 @@ add_subdirectory(source)
 add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES} ${TEST_FILES})
 
 #dependencies
-add_subdirectory(dependencies/awRevolt)
-target_link_libraries(${PROJECT_NAME} awEngine GL)
 
+add_subdirectory(dependencies/awRevolt)
+find_package(OpenGL)
+
+target_link_libraries(${PROJECT_NAME} awEngine ${OPENGL_gl_LIBRARY})
