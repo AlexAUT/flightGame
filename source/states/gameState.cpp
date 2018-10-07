@@ -7,6 +7,7 @@
 #include <aw/utils/math/constants.hpp>
 
 #include <aw/graphics/core/color.hpp>
+#include <aw/graphics/core/colors.hpp>
 #include <aw/graphics/core/postProcessRenderer.hpp>
 #include <aw/graphics/core/shaderStage.hpp>
 #include <aw/opengl/opengl.hpp>

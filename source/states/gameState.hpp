@@ -6,7 +6,7 @@
 #include "../game/resourceManager.hpp"
 
 #include <aw/engine/runtime/state.hpp>
-#include <aw/engine/window.hpp>
+#include <aw/engine/windowEventForward.hpp>
 #include <aw/graphics/core/camera.hpp>
 #include <aw/graphics/core/frameBuffer.hpp>
 #include <aw/graphics/core/shaderProgram.hpp>
