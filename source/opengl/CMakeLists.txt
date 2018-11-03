@@ -1,4 +1,6 @@
-set(HEADER_FILES
+if(${CMAKE_SYSTEM_NAME} MATCHES "Android")
+else()
+    set(HEADER_FILES
   ${HEADER_FILES}
   ${CMAKE_CURRENT_SOURCE_DIR}/gl.hpp
   PARENT_SCOPE
@@ -10,3 +12,4 @@ set(SOURCE_FILES
   PARENT_SCOPE
 )
 
+endif()

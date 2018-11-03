@@ -72,8 +72,8 @@ void main()
       if(pos_shadowmap[i].x >= 0.0 && pos_shadowmap[i].x <= 1.0 && pos_shadowmap[i].y >= 0.0 && pos_shadowmap[i].y <= 1.0)
       {
         vec2 scaledTex = pos_shadowmap[i].xy * 0.5;
-        scaledTex.x += (i % 2) * 0.5;
-        scaledTex.y += (i / 2) * 0.5;
+        scaledTex.x += mod(float(i), 2.0) * 0.5;
+        scaledTex.y += (float(i) / 2.0) * 0.5;
         if(texture2D(shadowMap_1, scaledTex).r < pos_shadowmap[i].z - bias)
         {
           visibility = 0.5;

@@ -6,18 +6,20 @@
 #include <aw/utils/log.hpp>
 #include <aw/utils/math/constants.hpp>
 
-#include <aw/graphics/core/color.hpp>
-#include <aw/graphics/core/colors.hpp>
+#include <aw/graphics/3d/mesh.hpp>
+#include <aw/graphics/3d/meshAnimation.hpp>
 #include <aw/graphics/core/postProcessRenderer.hpp>
 #include <aw/graphics/core/shaderStage.hpp>
 #include <aw/opengl/opengl.hpp>
-
 #include <aw/runtime/scene/meshNode.hpp>
+#include <aw/utils/color.hpp>
+#include <aw/utils/colors.hpp>
 #include <aw/utils/math/frustum.hpp>
+#include <aw/utils/spatial/AABB.hpp>
 
 #include <aw/graphics/3d/directionalLight.hpp>
 
-#include "../opengl/gl.hpp"
+#include <aw/opengl/opengl.hpp>
 
 using namespace aw::constantsF;
 
@@ -153,7 +155,6 @@ void GameState::render()
   mMeshRenderer.renderForwardPassWithShadow(mCamera, lightCam, mShadowFramebuffer.getDepthTexture(), mMeshForwardShader,
                                             light);
 
-  LogTemp() << mCamera.getPosition();
   glDisable(GL_DEPTH_TEST);
   //  aw::PostProcessRenderer::render(mShadowFramebuffer.getColorTexture());
 }

@@ -1,11 +1,5 @@
 cmake_minimum_required(VERSION 3.4.1)
 
-set(AW_ANDROID true)
-set(AW_USE_GLES true)
-add_definitions(-DAW_USE_GLES)
-add_definitions(-DAW_ANDROID)
-
-
 message(STATUS "SFML include dir: ${SFML_INCLUDE_DIR}")
 message(STATUS "SFML lib dir: ${SFML_LIBRARY_DIR}${ANDROID_ABI}/")
 message(STATUS "SFML extlib dir: ${SFML_EXT_LIBRARY_DIR}${ANDROID_ABI}/")
@@ -58,7 +52,6 @@ target_link_libraries( # Specifies the target library.
                        GLESv2
 
                        sfml-system
-
                        openal
 
                        sfml-window

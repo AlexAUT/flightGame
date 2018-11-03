@@ -29,6 +29,8 @@ public:
 
   void processEvent(const aw::WindowEvent& event);
 
+  void updateFlightControl();
+
 private:
   aw::Engine& mEngine;
   unsigned mEventListenerId;
@@ -46,4 +48,7 @@ private:
   Airplane mAirplane;
 
   aw::FrameBuffer mShadowFramebuffer;
+
+  aw::Vec2 mTouchStart;
+  bool mDragingPlane{false};
 };

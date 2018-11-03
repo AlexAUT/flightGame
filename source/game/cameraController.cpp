@@ -39,7 +39,6 @@ void CameraController::update(float delta, const Airplane& airplane)
   auto pos = glm::rotate(airplane.getFlightOrientation(),
                          aw::Vec3(airplane.getSidewaysForce() * -0.1f, cameraHeight, -distanceToPlane));
   mCamera->setPosition(pos + p->localTransform().getPosition());
-  LogTemp() << "Plane rot: " << pos;
   mCamera->setRotation(airplane.getFlightOrientation() *
                        aw::Quaternion(aw::Vec3(0.f, 0.25f * airplane.getSidewaysForce(), 0.f)) *
                        aw::Quaternion(aw::Vec3(0.f, PI, 0.f)));
