@@ -61,7 +61,7 @@ vec4 calculateDirLight(DirectionalLight light, vec4 diffColor, float visibility)
 void main()
 {
   vec4 color = vec4(0.0, 0.0, 0.0, 1.0);
-  vec4 mapColor = vec4(0.f, 0.f, 0.f, 1.0);
+  vec4 mapColor = vec4(0.0, 0.0, 0.0, 1.0);
 
   for(int i = 0; i < MAX_DIR_LIGHT_COUNT; i++)
   {

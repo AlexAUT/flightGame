@@ -7,8 +7,6 @@ int main()
 {
   aw::LOG_INITIALIZE();
 
-  LogTemp() << "WTF STARTING?";
-
   aw::Engine engine;
 
   auto initState = std::make_shared<GameState>(engine);
